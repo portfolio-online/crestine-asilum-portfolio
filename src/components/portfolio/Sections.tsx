@@ -45,7 +45,17 @@ const accentCycle = [
   { badge: "border-lavender/70 bg-lavender/40 text-lavender-deep", chip: "bg-lavender/60" },
 ] as const;
 
-const accent = (i: number) => accentCycle[i % accentCycle.length];
+type Accent = (typeof accentCycle)[number];
+type AccentChip = Accent["chip"];
+
+/** Picks list[i % len] with a guaranteed fallback (strict index access). */
+function at<T>(list: readonly T[], i: number): T {
+  const item = list[i % list.length];
+  const first = list[0] as T;
+  return item ?? first;
+}
+
+const accent = (i: number): Accent => at(accentCycle, i);
 
 /* ---------------- Capabilities ---------------- */
 
