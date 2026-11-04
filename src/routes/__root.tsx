@@ -78,11 +78,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Crestine L. Asilum — Customer Service Specialist" },
+      {
+        name: "description",
+        content:
+          "Portfolio of Crestine L. Asilum, Customer Service Specialist with 17 years of customer-facing experience and 10+ years in retail operations and leadership.",
+      },
+      { name: "author", content: "Crestine L. Asilum" },
+      { property: "og:title", content: "Crestine L. Asilum — Customer Service Specialist" },
+      {
+        property: "og:description",
+        content:
+          "17 years of customer-facing experience. 10+ years leading retail teams. Customer service, order processing, and operational support.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
