@@ -6,6 +6,7 @@ import {
   Menu,
   X,
   ArrowUpRight,
+  UserCog,
 } from "lucide-react";
 import { profile } from "@/lib/portfolio-data";
 
@@ -49,14 +50,10 @@ function useScrollSpy() {
 function ProfileBlock() {
   return (
     <div className="relative">
-      <div className="relative overflow-hidden rounded-3xl border-2 border-charcoal/10 shadow-offset-sage">
-        <img
-          src={profile.portrait}
-          alt={`${profile.name} — ${profile.title}`}
-          width={1024}
-          height={1280}
-          className="aspect-4/5 w-full object-cover"
-        />
+      <div className="relative flex aspect-4/5 items-center justify-center overflow-hidden rounded-3xl border-2 border-charcoal/10 bg-sage/15 shadow-offset-sage">
+        <span className="flex size-24 items-center justify-center rounded-3xl border-2 border-sage/70 bg-card">
+          <UserCog className="size-12 text-sage-deep" strokeWidth={1.5} aria-hidden="true" />
+        </span>
       </div>
       <div className="mt-5 text-center">
         <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">
@@ -147,13 +144,9 @@ export function MobileHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur lg:hidden">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
-          <img
-            src={profile.portrait}
-            alt=""
-            width={80}
-            height={100}
-            className="size-10 rounded-full border border-border object-cover"
-          />
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-sage/70 bg-sage/20 text-sage-deep">
+            <UserCog className="size-5" aria-hidden="true" />
+          </span>
           <div>
             <p className="font-display text-sm font-semibold leading-tight">{profile.name}</p>
             <p className="text-xs text-muted-foreground">{profile.title}</p>
