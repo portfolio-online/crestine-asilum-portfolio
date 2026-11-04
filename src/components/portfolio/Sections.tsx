@@ -46,7 +46,6 @@ const accentCycle = [
 ] as const;
 
 type Accent = (typeof accentCycle)[number];
-type AccentChip = Accent["chip"];
 
 /** Picks list[i % len] with a guaranteed fallback (strict index access). */
 function at<T>(list: readonly T[], i: number): T {
@@ -83,7 +82,7 @@ export function CapabilitiesSection() {
       </Reveal>
       <div className="mt-8 flex flex-wrap gap-3">
         {capabilities.map((cap, i) => {
-          const Icon = capabilityIcons[i % capabilityIcons.length];
+          const Icon = at(capabilityIcons, i);
           const a = accent(i);
           return (
             <Reveal key={cap} delay={(i % 3) * 70}>
@@ -126,7 +125,7 @@ export function ServicesSection() {
       </Reveal>
       <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {services.map((service, i) => {
-          const Icon = serviceIcons[i % serviceIcons.length];
+          const Icon = at(serviceIcons, i);
           const a = accent(i);
           return (
             <Reveal key={service.title} delay={(i % 3) * 70}>
@@ -167,7 +166,7 @@ export function ToolsSection() {
       </Reveal>
       <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {toolCategories.map((cat, i) => {
-          const Icon = toolIcons[i % toolIcons.length];
+          const Icon = at(toolIcons, i);
           const a = accent(i);
           return (
             <Reveal key={cat.label} delay={(i % 3) * 70}>
@@ -282,7 +281,7 @@ export function StrengthsSection() {
       </Reveal>
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {strengths.map((s, i) => {
-          const Icon = strengthIcons[i % strengthIcons.length];
+          const Icon = at(strengthIcons, i);
           const a = accent(i);
           return (
             <Reveal key={s.title} delay={(i % 3) * 70}>
