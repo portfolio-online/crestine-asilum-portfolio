@@ -13,7 +13,7 @@ export function ExperienceSection() {
         <SectionHeading
           index="03"
           title="Professional Experience"
-          blurb="Eighteen years of steady growth — from front-line service to leading teams of up to 60."
+          blurb="Seventeen years of steady growth — from front-line service to leading teams of up to 60."
         />
       </Reveal>
 
