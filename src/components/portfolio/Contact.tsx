@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowUpRight, UserCog } from "lucide-react";
 import { profile } from "@/lib/portfolio-data";
 import { Reveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
@@ -38,15 +38,10 @@ export function ContactSection() {
       <div className="mt-10 grid gap-6 lg:grid-cols-5">
         {/* Portrait */}
         <Reveal className="lg:col-span-2">
-          <div className="relative overflow-hidden rounded-3xl border-2 border-charcoal/10 shadow-offset-lavender">
-            <img
-              src={profile.portrait}
-              alt={`${profile.name} — ${profile.title}`}
-              width={1024}
-              height={1280}
-              loading="lazy"
-              className="aspect-4/5 w-full object-cover"
-            />
+          <div className="grid-paper relative flex aspect-4/5 items-center justify-center overflow-hidden rounded-3xl border-2 border-charcoal/10 bg-sage/15 shadow-offset-lavender">
+            <span className="flex size-28 items-center justify-center rounded-3xl border-2 border-sage/70 bg-card">
+              <UserCog className="size-14 text-sage-deep" strokeWidth={1.5} aria-hidden="true" />
+            </span>
             <div className="absolute bottom-4 left-4 rounded-xl border border-border bg-card/95 px-4 py-2.5 shadow-offset">
               <p className="font-display text-sm font-semibold">{profile.name}</p>
               <p className="text-xs text-muted-foreground">{profile.title}</p>
