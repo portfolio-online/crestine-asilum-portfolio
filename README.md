@@ -46,7 +46,7 @@ run `npm run build` first, then `npm run preview`:
 
 ```powershell
 $env:PORTFOLIO_ADMIN_USERNAME = "crestin123"
-$env:PORTFOLIO_ADMIN_PASSWORD = "admin123"
+$env:PORTFOLIO_ADMIN_PASSWORD = "<your-private-password>"
 npm run build
 npm run preview
 ```

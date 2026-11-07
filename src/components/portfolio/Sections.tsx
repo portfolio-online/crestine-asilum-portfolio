@@ -25,16 +25,14 @@ import {
   Eye,
   Layers,
   HeartHandshake,
+  Search,
+  ShoppingCart,
+  CalendarDays,
+  FileText,
+  BriefcaseBusiness,
   type LucideIcon,
 } from "lucide-react";
-import {
-  capabilities,
-  services,
-  toolCategories,
-  education,
-  trainings,
-  strengths,
-} from "@/lib/portfolio-data";
+import { usePortfolioData } from "@/lib/use-portfolio-data";
 import { Reveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 
@@ -71,6 +69,8 @@ const capabilityIcons: LucideIcon[] = [
 ];
 
 export function CapabilitiesSection() {
+  const { capabilities } = usePortfolioData();
+
   return (
     <section id="capabilities" className="scroll-mt-24 py-14">
       <Reveal>
@@ -114,6 +114,8 @@ const serviceIcons: LucideIcon[] = [
 ];
 
 export function ServicesSection() {
+  const { services } = usePortfolioData();
+
   return (
     <section id="services" className="scroll-mt-24 py-14">
       <Reveal>
@@ -137,9 +139,7 @@ export function ServicesSection() {
                 >
                   <Icon className="size-5" aria-hidden="true" />
                 </div>
-                <h3 className="font-display text-lg font-semibold leading-snug">
-                  {service.title}
-                </h3>
+                <h3 className="font-display text-lg font-semibold leading-snug">{service.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{service.description}</p>
               </article>
             </Reveal>
@@ -153,8 +153,31 @@ export function ServicesSection() {
 /* ---------------- Tools & Technical Skills ---------------- */
 
 const toolIcons: LucideIcon[] = [Table2, Database, Mail, FolderOpen, BarChart3];
+const toolItemIcons: Record<string, LucideIcon> = {
+  "Microsoft Excel": Table2,
+  "Google Sheets": Table,
+  VLOOKUP: Search,
+  "Data Validation": BadgeCheck,
+  SAP: Database,
+  POS: ShoppingCart,
+  S4DECS: Database,
+  "IVS / Invoicing": ClipboardList,
+  Gmail: Mail,
+  Outlook: Mail,
+  "Calendar Management": CalendarDays,
+  "Google Drive": FolderOpen,
+  "Google Docs": FileText,
+  "Microsoft Office": BriefcaseBusiness,
+  "Business Intelligence": BarChart3,
+  "Operational Reporting Tools": ClipboardList,
+};
 
 export function ToolsSection() {
+  const { profile, toolCategories } = usePortfolioData();
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    profile.email,
+  )}`;
+
   return (
     <section id="tools" className="scroll-mt-24 py-14">
       <Reveal>
@@ -181,11 +204,20 @@ export function ToolsSection() {
                 </div>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {cat.items.map((item) => (
-                    <li
-                      key={item}
-                      className={`rounded-md border border-border px-2.5 py-1 text-xs font-medium ${a.badge}`}
-                    >
-                      {item}
+                    <li key={item}>
+                      {item === "Gmail" ? (
+                        <a
+                          href={gmailUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:brightness-95 ${a.badge}`}
+                        >
+                          <Mail className="size-3.5" aria-hidden="true" />
+                          {item}
+                        </a>
+                      ) : (
+                        <ToolSkill item={item} badgeClass={a.badge} />
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -198,13 +230,69 @@ export function ToolsSection() {
   );
 }
 
+function ToolSkill({ item, badgeClass }: { item: string; badgeClass: string }) {
+  const Icon = toolItemIcons[item];
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-xs font-medium ${badgeClass}`}
+    >
+      {Icon && <Icon className="size-3.5" aria-hidden="true" />}
+      {item}
+    </span>
+  );
+}
+
+/* ---------------- Work Samples ---------------- */
+
+export function WorkSamplesSection() {
+  const { workSamples } = usePortfolioData();
+
+  return (
+    <section id="work-samples" aria-label="Work Samples" className="min-h-64 scroll-mt-24 py-14">
+      <Reveal>
+        <SectionHeading index="06" title="Work Samples" />
+      </Reveal>
+      {workSamples.length ? (
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {workSamples.map((sample) => (
+            <article
+              key={`${sample.title}-${sample.attachment.name}`}
+              className="rounded-2xl border bg-card p-5 shadow-offset hover-lift"
+            >
+              <h3 className="font-display text-lg font-semibold">{sample.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{sample.description}</p>
+              {sample.attachment.dataUrl && (
+                <a
+                  href={sample.attachment.dataUrl}
+                  download={sample.attachment.name}
+                  className="mt-4 inline-flex text-sm font-semibold text-primary hover:underline"
+                >
+                  Download {sample.attachment.name}
+                  <span className="sr-only"> for {sample.title}</span>
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-5 max-w-xl text-sm text-muted-foreground">
+          Work samples will be added here.
+        </p>
+      )}
+    </section>
+  );
+}
+
 /* ---------------- Education ---------------- */
 
 export function EducationSection() {
+  const { education } = usePortfolioData();
+
   return (
     <section id="education" className="scroll-mt-24 py-14">
       <Reveal>
-        <SectionHeading index="06" title="Education" />
+        <SectionHeading index="07" title="Education" />
       </Reveal>
       <Reveal delay={80}>
         <article className="mt-8 flex items-start gap-5 rounded-2xl border bg-card p-6 shadow-offset-sage">
@@ -228,10 +316,12 @@ export function EducationSection() {
 /* ---------------- Trainings & Certifications ---------------- */
 
 export function TrainingsSection() {
+  const { trainings } = usePortfolioData();
+
   return (
     <section id="training" className="scroll-mt-24 py-14">
       <Reveal>
-        <SectionHeading index="07" title="Trainings & Certifications" />
+        <SectionHeading index="08" title="Trainings & Certifications" />
       </Reveal>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
         {trainings.map((t, i) => {
@@ -270,11 +360,13 @@ const strengthIcons: LucideIcon[] = [
 ];
 
 export function StrengthsSection() {
+  const { strengths } = usePortfolioData();
+
   return (
     <section id="strengths" className="scroll-mt-24 py-14">
       <Reveal>
         <SectionHeading
-          index="08"
+          index="09"
           title="Professional Strengths"
           blurb="How I work — and what colleagues and customers can count on."
         />

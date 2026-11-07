@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { experience } from "@/lib/portfolio-data";
+import { usePortfolioData } from "@/lib/use-portfolio-data";
 import { Reveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 
 export function ExperienceSection() {
+  const { experience } = usePortfolioData();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
