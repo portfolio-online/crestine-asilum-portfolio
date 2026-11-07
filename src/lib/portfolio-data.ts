@@ -1,12 +1,3 @@
-/**
- * ============================================================
- *  PORTFOLIO CONTENT — edit everything in this one file.
- *  Replace `portrait` (src/assets/portrait.jpg) with a real
- *  photo using the same file name and the whole site updates.
- * ============================================================
- */
-import portrait from "@/assets/portrait.jpg";
-
 export const profile = {
   name: "Crestine L. Asilum",
   title: "Customer Service Specialist",
@@ -18,8 +9,9 @@ export const profile = {
   phone: "+63 991 528 1485",
   phoneHref: "+639915281485",
   location: "Camalig, Albay, Philippines",
-  portrait,
-  // Swap this URL for a real photo (e.g. a public/images/... path) at any time.
+  sidebarImage: "",
+  heroImage: "",
+  contactImage: "",
 };
 
 export const capabilities = [
@@ -165,3 +157,23 @@ export const strengths = [
   { title: "Multitasking", note: "Balances customers, systems, and teams at once." },
   { title: "Customer Satisfaction", note: "The outcome every task is measured by." },
 ];
+
+export const workSamples: {
+  title: string;
+  description: string;
+  attachment: { name: string; dataUrl: string };
+}[] = [];
+
+export const defaultPortfolioData = {
+  profile,
+  capabilities,
+  experience,
+  services,
+  toolCategories,
+  workSamples,
+  education,
+  trainings,
+  strengths,
+};
+
+export type PortfolioData = typeof defaultPortfolioData;

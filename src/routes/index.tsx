@@ -1,11 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Sparkles, ArrowDown } from "lucide-react";
-import { profile } from "@/lib/portfolio-data";
+import { useState } from "react";
+import type { CSSProperties } from "react";
+import { Mail, Sparkles, ArrowDown, FileDown } from "lucide-react";
 import { Reveal } from "@/hooks/use-reveal";
 import { DesktopSidebar, MobileHeader } from "@/components/portfolio/Sidebar";
-import { CapabilitiesSection, ServicesSection, ToolsSection, EducationSection, TrainingsSection, StrengthsSection } from "@/components/portfolio/Sections";
+import { AdminDashboard } from "@/components/portfolio/AdminDashboard";
+import {
+  CapabilitiesSection,
+  EducationSection,
+  ServicesSection,
+  StrengthsSection,
+  ToolsSection,
+  TrainingsSection,
+  WorkSamplesSection,
+} from "@/components/portfolio/Sections";
 import { ExperienceSection } from "@/components/portfolio/Experience";
 import { ContactSection } from "@/components/portfolio/Contact";
+import { usePortfolioData } from "@/lib/use-portfolio-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,6 +41,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Hero() {
+  const { profile } = usePortfolioData();
+
   return (
     <section
       id="about"
@@ -46,8 +59,7 @@ function Hero() {
               {profile.name}
             </h1>
             <p className="mt-3 font-display text-lg text-sage-deep sm:text-xl">
-              {profile.title} <span className="text-muted-foreground">|</span>{" "}
-              {profile.subtitle}
+              {profile.title} <span className="text-muted-foreground">|</span> {profile.subtitle}
             </p>
             <p className="mt-5 max-w-xl text-base font-medium text-foreground sm:text-lg">
               {profile.headline}
@@ -72,6 +84,15 @@ function Hero() {
                 View Experience
                 <ArrowDown className="size-4" aria-hidden="true" />
               </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-3.5 text-sm font-semibold text-foreground shadow-offset transition-colors hover:border-sage/70 hover:bg-sage/10"
+              >
+                <FileDown className="size-4" aria-hidden="true" />
+                View Resume
+              </a>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-offset">
@@ -91,7 +112,7 @@ function Hero() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="relative mx-auto w-full max-w-sm">
+          <div className="relative mx-auto aspect-4/5 w-full max-w-sm overflow-hidden rounded-3xl bg-sage/15 shadow-offset-lavender">
             {/* pixel-corner accents */}
             <span
               className="absolute -top-3 -left-3 size-6 border-t-2 border-l-2 border-sage-deep"
@@ -101,19 +122,15 @@ function Hero() {
               className="absolute -right-3 -bottom-3 size-6 border-r-2 border-b-2 border-lavender-deep"
               aria-hidden="true"
             />
-            <div className="overflow-hidden rounded-3xl border-2 border-charcoal/10 bg-card shadow-offset-sage">
-              <img
-                src={profile.portrait}
-                alt={`${profile.name} — ${profile.title}`}
-                width={1024}
-                height={1280}
-                className="aspect-4/5 w-full object-cover"
-              />
-            </div>
+            <img
+              src={profile.heroImage || "/profile1.jpg"}
+              alt={`${profile.name} at her desk`}
+              className="size-full object-cover object-center"
+            />
             <div className="absolute -bottom-5 left-1/2 w-max -translate-x-1/2 rounded-xl border border-border bg-card px-4 py-2.5 shadow-offset-lavender">
               <p className="flex items-center gap-2 text-sm font-semibold">
                 <span className="size-2 rounded-full bg-sage-deep" aria-hidden="true" />
-                Open to new opportunities
+                Administrative Support
               </p>
             </div>
           </div>
@@ -124,6 +141,8 @@ function Hero() {
 }
 
 function Footer() {
+  const { profile } = usePortfolioData();
+
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
@@ -140,7 +159,9 @@ function Footer() {
           >
             {profile.email}
           </a>
-          <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} {profile.name}. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
@@ -148,17 +169,32 @@ function Footer() {
 }
 
 function Index() {
+  const [sidebarWidth, setSidebarWidth] = useState(288);
+  const [adminOpen, setAdminOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
-      <DesktopSidebar />
-      <MobileHeader />
-      <main className="lg:pl-80">
+      <DesktopSidebar
+        width={sidebarWidth}
+        onWidthChange={setSidebarWidth}
+        onAdminClick={() => setAdminOpen(true)}
+      />
+      <MobileHeader onAdminClick={() => setAdminOpen(true)} />
+      <main
+        className="lg:pl-[var(--sidebar-width)]"
+        style={
+          { "--sidebar-width": `${sidebarWidth}px` } as CSSProperties & {
+            "--sidebar-width": string;
+          }
+        }
+      >
         <Hero />
         <div className="mx-auto max-w-6xl px-6">
           <CapabilitiesSection />
           <ExperienceSection />
           <ServicesSection />
           <ToolsSection />
+          <WorkSamplesSection />
           <EducationSection />
           <TrainingsSection />
           <StrengthsSection />
@@ -166,6 +202,7 @@ function Index() {
         </div>
         <Footer />
       </main>
+      <AdminDashboard open={adminOpen} onClose={() => setAdminOpen(false)} />
     </div>
   );
 }

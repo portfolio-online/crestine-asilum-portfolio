@@ -1,35 +1,39 @@
-import { Mail, Phone, MapPin, ArrowUpRight, UserCog } from "lucide-react";
-import { profile } from "@/lib/portfolio-data";
+import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { usePortfolioData } from "@/lib/use-portfolio-data";
 import { Reveal } from "@/hooks/use-reveal";
 import { SectionHeading } from "./SectionHeading";
 
-const contactRows = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: profile.email,
-    href: `mailto:${profile.email}`,
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: profile.phone,
-    href: `tel:${profile.phoneHref}`,
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: profile.location,
-    href: "https://maps.google.com/?q=Camalig,Albay,Philippines",
-  },
-];
-
 export function ContactSection() {
+  const { profile } = usePortfolioData();
+  const contactRows = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: profile.email,
+      href: `mailto:${profile.email}`,
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: profile.phone,
+      href: `tel:${profile.phoneHref}`,
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: profile.location,
+      href: "https://maps.google.com/?q=Camalig,Albay,Philippines",
+    },
+  ];
+  const composeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    profile.email,
+  )}&su=${encodeURIComponent("Work inquiry — let's get started")}`;
+
   return (
     <section id="contact" className="scroll-mt-24 py-14">
       <Reveal>
         <SectionHeading
-          index="09"
+          index="10"
           title="Work With Me"
           blurb="Looking for dependable customer service and operational support? I'd love to hear from you."
         />
@@ -39,9 +43,11 @@ export function ContactSection() {
         {/* Portrait */}
         <Reveal className="lg:col-span-2">
           <div className="grid-paper relative flex aspect-4/5 items-center justify-center overflow-hidden rounded-3xl border-2 border-charcoal/10 bg-sage/15 shadow-offset-lavender">
-            <span className="flex size-28 items-center justify-center rounded-3xl border-2 border-sage/70 bg-card">
-              <UserCog className="size-14 text-sage-deep" strokeWidth={1.5} aria-hidden="true" />
-            </span>
+            <img
+              src={profile.contactImage || "/profile.jpg"}
+              alt={profile.name}
+              className="size-full object-cover object-center"
+            />
             <div className="absolute bottom-4 left-4 rounded-xl border border-border bg-card/95 px-4 py-2.5 shadow-offset">
               <p className="font-display text-sm font-semibold">{profile.name}</p>
               <p className="text-xs text-muted-foreground">{profile.title}</p>
@@ -78,16 +84,16 @@ export function ContactSection() {
 
             <div className="mt-auto pt-4">
               <a
-                href={`mailto:${profile.email}?subject=${encodeURIComponent(
-                  "Work inquiry — let's get started",
-                )}`}
+                href={composeUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center justify-center gap-2.5 rounded-xl bg-primary px-6 py-4 text-center font-display text-lg font-semibold text-primary-foreground shadow-offset-sage transition-transform hover:-translate-y-0.5"
               >
                 <Mail className="size-5" aria-hidden="true" />
                 Email Me to Get Started
               </a>
               <p className="mt-3 text-center text-xs text-muted-foreground">
-                Opens your email application with a message ready to send.
+                Opens a new Gmail tab so you can write your message.
               </p>
             </div>
           </div>
