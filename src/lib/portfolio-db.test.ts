@@ -37,6 +37,12 @@ describe("portfolio SQLite database", () => {
     expect(database.readPortfolioData()).toEqual(updated);
   });
 
+  it("adds the default work samples to existing portfolios without samples", () => {
+    database.writePortfolioData({ ...defaultPortfolioData, workSamples: [] });
+
+    expect(database.readPortfolioData().workSamples).toEqual(defaultPortfolioData.workSamples);
+  });
+
   it("rejects malformed portfolio data", () => {
     const malformed: unknown = { ...defaultPortfolioData, capabilities: "not a list" };
 

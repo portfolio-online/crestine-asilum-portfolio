@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 import { Mail, Sparkles, ArrowDown, FileDown } from "lucide-react";
 import { Reveal } from "@/hooks/use-reveal";
 import { DesktopSidebar, MobileHeader } from "@/components/portfolio/Sidebar";
-import { AdminDashboard } from "@/components/portfolio/AdminDashboard";
 import {
   CapabilitiesSection,
   EducationSection,
@@ -170,16 +169,11 @@ function Footer() {
 
 function Index() {
   const [sidebarWidth, setSidebarWidth] = useState(288);
-  const [adminOpen, setAdminOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
-      <DesktopSidebar
-        width={sidebarWidth}
-        onWidthChange={setSidebarWidth}
-        onAdminClick={() => setAdminOpen(true)}
-      />
-      <MobileHeader onAdminClick={() => setAdminOpen(true)} />
+      <DesktopSidebar width={sidebarWidth} onWidthChange={setSidebarWidth} />
+      <MobileHeader />
       <main
         className="lg:pl-[var(--sidebar-width)]"
         style={
@@ -202,7 +196,6 @@ function Index() {
         </div>
         <Footer />
       </main>
-      <AdminDashboard open={adminOpen} onClose={() => setAdminOpen(false)} />
     </div>
   );
 }

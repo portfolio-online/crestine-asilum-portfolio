@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Mail, Phone, MapPin, Menu, X, ArrowUpRight, FileDown, UserRoundCog } from "lucide-react";
+import { Mail, Phone, MapPin, Menu, X, ArrowUpRight, FileDown } from "lucide-react";
 import { usePortfolioData } from "@/lib/use-portfolio-data";
 
 export const navItems = [
@@ -40,24 +40,18 @@ function useScrollSpy() {
   return active;
 }
 
-function ProfileBlock({ onAdminClick }: { onAdminClick: () => void }) {
+function ProfileBlock() {
   const { profile } = usePortfolioData();
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={onAdminClick}
-        aria-label="Open profile manager"
-        title="Open profile manager"
-        className="mx-auto block size-20 overflow-hidden rounded-full border-2 border-sage/60 shadow-offset-sage transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
+      <div className="mx-auto block size-20 overflow-hidden rounded-full border-2 border-sage/60 shadow-offset-sage">
         <img
           src={profile.sidebarImage || "/profile.jpg"}
           alt=""
           className="size-full object-cover"
         />
-      </button>
+      </div>
       <div className="mt-5 text-center">
         <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">
           {profile.name}
@@ -134,11 +128,9 @@ const MAX_SIDEBAR_WIDTH = 400;
 export function DesktopSidebar({
   width,
   onWidthChange,
-  onAdminClick,
 }: {
   width: number;
   onWidthChange: (width: number) => void;
-  onAdminClick: () => void;
 }) {
   const active = useScrollSpy();
 
@@ -147,16 +139,8 @@ export function DesktopSidebar({
       style={{ width }}
       className="fixed inset-y-0 left-0 z-40 hidden flex-col gap-8 overflow-y-auto border-r border-border bg-card px-6 py-8 lg:flex"
     >
-      <ProfileBlock onAdminClick={onAdminClick} />
+      <ProfileBlock />
       <ContactShortcuts />
-      <button
-        type="button"
-        onClick={onAdminClick}
-        className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-sage/70 hover:bg-sage/10"
-      >
-        <UserRoundCog className="size-4 text-primary" aria-hidden="true" />
-        Edit Profile
-      </button>
       <a
         href="/resume.pdf"
         target="_blank"
@@ -205,7 +189,7 @@ export function DesktopSidebar({
   );
 }
 
-export function MobileHeader({ onAdminClick }: { onAdminClick: () => void }) {
+export function MobileHeader() {
   const [open, setOpen] = useState(false);
   const active = useScrollSpy();
   const { profile } = usePortfolioData();
@@ -214,18 +198,13 @@ export function MobileHeader({ onAdminClick }: { onAdminClick: () => void }) {
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur lg:hidden">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={onAdminClick}
-            aria-label="Open profile manager"
-            className="size-10 shrink-0 overflow-hidden rounded-full border border-sage/70"
-          >
+          <div className="size-10 shrink-0 overflow-hidden rounded-full border border-sage/70">
             <img
               src={profile.sidebarImage || "/profile.jpg"}
               alt=""
               className="size-full object-cover"
             />
-          </button>
+          </div>
           <div>
             <p className="font-display text-sm font-semibold leading-tight">{profile.name}</p>
             <p className="text-xs text-muted-foreground">{profile.title}</p>
@@ -260,24 +239,14 @@ export function MobileHeader({ onAdminClick }: { onAdminClick: () => void }) {
           >
             Contact Me <ArrowUpRight className="size-4" />
           </a>
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                onAdminClick();
-              }}
-              className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm font-semibold"
-            >
-              <UserRoundCog className="size-4" aria-hidden="true" /> Edit Profile
-            </button>
+          <div className="mt-2 grid grid-cols-1 gap-2">
             <a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm font-semibold"
             >
-              <FileDown className="size-4" aria-hidden="true" /> Resume
+              <FileDown className="size-4" aria-hidden="true" /> View Resume
             </a>
           </div>
         </nav>

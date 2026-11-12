@@ -35,7 +35,10 @@ export function readPortfolioData() {
   const row = readContent.get() as { content: string } | undefined;
   if (!row) throw new Error("Portfolio data was not found in the SQLite database.");
 
-  return portfolioSchema.parse(JSON.parse(row.content));
+  const portfolio = portfolioSchema.parse(JSON.parse(row.content));
+  return portfolio.workSamples.length
+    ? portfolio
+    : { ...portfolio, workSamples: defaultPortfolioData.workSamples };
 }
 
 export function writePortfolioData(content: unknown) {

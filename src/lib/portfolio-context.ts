@@ -93,6 +93,9 @@ const workSampleAttachmentSchema = z
 
 function isSupportedAttachmentData(value: string) {
   if (!value) return true;
+  if (/^\/(?!\/)(?!.*(?:^|\/)\.\.(?:\/|$))[A-Za-z0-9%._/-]+\.xlsx$/i.test(value)) {
+    return true;
+  }
   const match =
     /^data:([^;]+);base64,((?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?)$/.exec(
       value,

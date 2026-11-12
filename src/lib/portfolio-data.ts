@@ -162,7 +162,35 @@ export const workSamples: {
   title: string;
   description: string;
   attachment: { name: string; dataUrl: string };
-}[] = [];
+}[] = [
+  {
+    title: "Product Inventory Tracker",
+    description:
+      "I created a product inventory tracker in Google Sheets to practice data entry, spreadsheet organization, and inventory management. The spreadsheet contains product information such as category, price, stock quantity, supplier, and availability status. I also used an IF formula and conditional formatting to automatically identify products that are in stock, low in stock, or out of stock.",
+    attachment: {
+      name: "Product Inventory Tracker – Sample Project.xlsx",
+      dataUrl: "/Product%20Inventory%20Tracker%20%E2%80%93%20Sample%20Project.xlsx",
+    },
+  },
+  {
+    title: "Customer Information Tracker",
+    description:
+      "I created a customer information tracker in Google Sheets to practice organizing and managing customer records. The spreadsheet contains customer names, email addresses, contact numbers, locations, and registration dates.",
+    attachment: {
+      name: "Customer Information Tracker – Sample Project.xlsx",
+      dataUrl: "/Customer%20Information%20Tracker%20%E2%80%93%20Sample%20Project.xlsx",
+    },
+  },
+  {
+    title: "Daily VA Task Tracker",
+    description:
+      "I created a daily task tracker in Google Sheets to practice organizing and monitoring administrative tasks for multiple clients. The tracker includes deadlines, priorities, task statuses, and notes to help manage workloads and keep track of task progress.",
+    attachment: {
+      name: "Daily VA Task Tracker – Sample Project.xlsx",
+      dataUrl: "/Daily%20VA%20Task%20Tracker%20%E2%80%93%20Sample%20Project.xlsx",
+    },
+  },
+];
 
 export const defaultPortfolioData = {
   profile,
